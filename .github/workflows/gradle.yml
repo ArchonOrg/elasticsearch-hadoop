@@ -33,5 +33,29 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
 
+    - name: Setup JAVA8_HOME
+      run: |
+        wget https://cdn.azul.com/zulu/bin/zulu8.76.0.17-ca-jdk8.0.402-linux_x64.tar.gz
+        tar xzvf zulu8.76.0.17-ca-jdk8.0.402-linux_x64.tar.gz -C /tmp/
+
     - name: Build with Gradle Wrapper
-      run: ./gradlew distZip
+      run: |
+        export JAVA8_HOME=/tmp/zulu8.76.0.17-ca-jdk8.0.402-linux_x64
+        ./gradlew distZip
+
+    - name: Stop gradle daemon
+      run: ./gradlew --stop
+
+    - name: Upload build artifact libs
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.sha }}-libs.zip
+        path: build/libs
+        compression-level: 9
+
+    - name: Upload build artifact dist
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.sha }}-dist.zip
+        path: build/distributions
+        compression-level: 9
