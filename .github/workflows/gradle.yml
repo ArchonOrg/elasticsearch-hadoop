@@ -49,13 +49,15 @@ jobs:
     - name: Upload build artifact libs
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.sha }}-libs.zip
+        # default is zip file
+        name: ${{ github.sha }}-libs
         path: build/libs
         compression-level: 9
 
     - name: Upload build artifact dist
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.sha }}-dist.zip
+        # default is zip file
+        name: ${{ github.sha }}-dist
         path: build/distributions
         compression-level: 9
