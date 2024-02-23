@@ -765,9 +765,9 @@ public class RestClient implements Closeable, StatsAware {
         }
         String versionNumber = versionBody.get("number");
         EsMajorVersion major = EsMajorVersion.parse(versionNumber);
-        if (major.before(EsMajorVersion.V_6_X)) {
+        if (major.before(EsMajorVersion.V_5_X)) {
             throw new EsHadoopIllegalStateException("Invalid major version [" + major + "]. " +
-                    "Version is lower than minimum required version [" + EsMajorVersion.V_6_X + "].");
+                    "Version is lower than minimum required version [" + EsMajorVersion.V_5_X + "].");
         } else if (major.onOrAfter(V_6_X)) {
             String tagline = result.get("tagline").toString();
             if (ELASTICSEARCH_TAGLINE.equals(tagline) == false) {
